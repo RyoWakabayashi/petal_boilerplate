@@ -1,5 +1,6 @@
 defmodule PetalBoilerplateWeb.Router do
   use PetalBoilerplateWeb, :router
+  import PhoenixStorybook.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -14,6 +15,10 @@ defmodule PetalBoilerplateWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/" do
+    storybook_assets()
+  end
+
   scope "/", PetalBoilerplateWeb do
     pipe_through :browser
 
@@ -22,6 +27,7 @@ defmodule PetalBoilerplateWeb.Router do
     live "/live/modal/:size", PageLive, :modal
     live "/live/slide_over/:origin", PageLive, :slide_over
     live "/live/pagination/:page", PageLive, :pagination
+    live_storybook "/storybook", backend_module: PetalBoilerplateWeb.Storybook
   end
 
   # Other scopes may use custom stacks.
